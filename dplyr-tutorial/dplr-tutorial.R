@@ -25,4 +25,38 @@ print(flights, n = 20)
 # convert to normal data frame
 data.frame(head(flights))
 
+######################################################################
+# select all flights in January
+flights[flights$Month == 1, ]
+
+# select all flights on 1st January
+flights[flights$Month == 1 & flights$DayofMonth == 1, ]
+
+# the same like above but in dplyr style
+filter(flights, Month == 1, DayofMonth == 1)
+
+#filter rows only yo 'AA' or 'UA' flights
+filter(flights, UniqueCarrier == 'AA' | UniqueCarrier == 'UA')
+
+# the same like above but use %in% operator
+filter(flights, UniqueCarrier %in% c('AA', 'UA'))
+######################################################################
+
+######################################################################
+# base r approche to select only given columns
+flights[, c('DepTime', 'ArrTime', 'FlightNum')]
+
+# the same like above but with splyr approche
+select(flights, DepTime, ArrTime, FlightNum)
+
+# select columns from Year to DayofMonth and all columns which contain 'Taxi' and 'Delay'
+select(flights, Year:DayofMonth, contains('Taxi'), contains('Delay'))
+
+# use starts_with() and ends_with() to select columns
+select(flights, starts_with('A'), ends_with('Delay'))
+
+
+######################################################################
+
+
 
