@@ -54,9 +54,34 @@ select(flights, Year:DayofMonth, contains('Taxi'), contains('Delay'))
 
 # use starts_with() and ends_with() to select columns
 select(flights, starts_with('A'), ends_with('Delay'))
-
-
 ######################################################################
 
+# nested select in filter
+filter(select(flights, UniqueCarrier, DepDelay), DepDelay > 30)
 
+# chaining
+flights %>% 
+    select(UniqueCarrier, DepDelay) %>%
+    filter(DepDelay > 30)
 
+# another example of chaining
+x1 <- 1:5
+x2 <- 2:6
+
+sqrt(sum((x1-x2)^2))
+
+# the same with chaining
+(x1 - x2)^2 %>% sum() %>% sqrt()
+
+######################################################################
+# select only UniqueCarrier and DepDelay columns and sort by DepDelay in base R
+flights[order(flights$DepDelay), c('UniqueCarrier', 'DepDelay')]
+
+# the same using deply style
+flights %>%
+    select(UniqueCarrier, DepDelay) %>%
+    arrange(DepDelay)
+
+flights %>%
+    select(UniqueCarrier, DepDelay) %>%
+    arrange(desc(DepDelay))
