@@ -97,3 +97,5 @@ flights %>%
 
 # store new variable
 flights <- flights %>% mutate(Speed = Distance / AirTime*60)
+
+
