@@ -77,7 +77,7 @@ sqrt(sum((x1-x2)^2))
 # select only UniqueCarrier and DepDelay columns and sort by DepDelay in base R
 flights[order(flights$DepDelay), c('UniqueCarrier', 'DepDelay')]
 
-# the same using deply style
+# the same using dplyr style
 flights %>%
     select(UniqueCarrier, DepDelay) %>%
     arrange(DepDelay)
@@ -85,3 +85,15 @@ flights %>%
 flights %>%
     select(UniqueCarrier, DepDelay) %>%
     arrange(desc(DepDelay))
+######################################################################
+# add new variable which is function of existing variables in base R
+flights$Speed <- flights$Distance / flights$AirTime*60
+flights[, c('Distance', 'AirTime', 'Speed')]
+
+# the same using dplyr style
+flights %>%
+    select(Distance, AirTime) %>%
+    mutate(Speed = Distance / AirTime*60)
+
+# store new variable
+flights <- flights %>% mutate(Speed = Distance / AirTime*60)
