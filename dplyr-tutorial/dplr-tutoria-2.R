@@ -1,5 +1,8 @@
+# My practise of dplyr based on https://github.com/justmarkham/dplyr-tutorial
 library(nycflights13)
 library(dplyr)
+
+
 
 # besides just using select() to pick columns...
 flights %>% select(carrier, flight)
