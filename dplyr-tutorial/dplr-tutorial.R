@@ -143,4 +143,6 @@ flights %>%
     select(Cancelled) %>%
     table() %>%
     head()
+
+# continue with Window Functions
     
