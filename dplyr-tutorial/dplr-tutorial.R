@@ -108,7 +108,39 @@ flights %>%
     group_by(Dest) %>%
     summarise(avg_delay = mean(ArrDelay, na.rm = TRUE))
 
+# for each carrier, calculate the percentage of flights cancelled or diverted
 flights %>%
     group_by(UniqueCarrier) %>%
     summarise_each(funs(mean), Cancelled, Diverted)
+
+# for each carrier, calculate min & max arrival and departures delay
+flights %>%
+    group_by(UniqueCarrier) %>%
+    summarise_each(funs(min(. , na.rm = TRUE), max(. , na.rm = TRUE)), matches('Delay'))
+
+# for each day of the year, count the total number of flights and sort in descending order
+# helper function: 
+# n() counts the number of rows in a group
+# n_distinct(vector) counts the number of unique items in that vector
+flights %>%
+    group_by(Month, DayofMonth) %>%
+    summarise(flight_count = n()) %>%
+    arrange(desc(flight_count))
+
+# the same like above but simplified with tally function
+flights %>%
+    group_by(Month, DayofMonth) %>%
+    tally(sort = TRUE)
+
+# for each destination, count the total number of flights and the number of distinct planes that flew there
+flights %>%
+    group_by(Dest) %>%
+    summarise(flight_count = n(), plane_count = n_distinct(TailNum))
+
+# for each destination, show the number of cancelled and not cancelled flights
+flights %>%
+    group_by(Dest) %>%
+    select(Cancelled) %>%
+    table() %>%
+    head()
     
