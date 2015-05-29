@@ -97,5 +97,18 @@ flights %>%
 
 # store new variable
 flights <- flights %>% mutate(Speed = Distance / AirTime*60)
+######################################################################
 
+# calculate the average arrival delay to each destination
+with(flights, tapply(ArrDelay, Dest, mean, na.rm = TRUE))
+aggregate(ArrDelay ~ Dest, flights, mean)
 
+# the same using dplyr style
+flights %>%
+    group_by(Dest) %>%
+    summarise(avg_delay = mean(ArrDelay, na.rm = TRUE))
+
+flights %>%
+    group_by(UniqueCarrier) %>%
+    summarise_each(funs(mean), Cancelled, Diverted)
+    
